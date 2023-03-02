@@ -39,8 +39,16 @@
 
 
 
-# convert index of char to bin code
-def bin_code(dictionary, n):
+
+
+
+
+# convert index of sequence to bin code
+# добавить нули в начало
+def get_index(dictionary, n):
+    max_index=bin(len(dictionary)-1).replace("0b", "")
+
+
     return bin(dictionary.index(n)).replace("0b", "")
 
 
@@ -63,19 +71,46 @@ def init_dict(symbols):
 
 
 # find max length 
-def sequence_legth(dictionary):
+def sequence_length(dictionary):
     l=0
     for i in dictionary:
-        if len(i)>l
+        if len(i)>l:
             l=len(i)
     return l
 
 
 ### encoding sequence of symbols
-def encode_file(symbols, dictionary):
-    while symbols!='':
-        if symbols[:max_seq] in dictionary:
-            pass
+def encode_file(file, dictionary):
+    last_seq=''
+    # предыдущая последовательность
+    code='' # зашифрованный файл
+
+    ### пока не закончится файл
+    while file!='':
+        current_seq=file[:max_seq]
+
+        # если самая большая последовательность уже есть в словаре
+        if current_seq not in dictionary:
+            i=1
+            while len(current_seq)>1 or current_seq not in dictionary:
+                current_seq=current_seq[:max_seq-i]
+                i+=1
+
+        # добавляем к коду индекс последовательности
+        # сокращаем последовательность
+        # last seq=cur seq
+        # max seq
+        code+='  '+ get_index(dictionary, current_seq)
+
+        print (current_seq)
+        print(code)
+
+        last_seq = current_seq
+        file = file[max_seq + 1:-1]
+
+
+
+            
 
     
 
@@ -84,22 +119,29 @@ def encode_file(symbols, dictionary):
 
 
 
+
+
+
+
+
 #### MAIN ####
 
-symbols=read_file('input_file') # последовательность символов
-dictionary=init_dict(symbols) # начальный словарь
+file=read_file('input_file') # последовательность символов
+dictionary=init_dict(file) # начальный словарь
 # code=''
-max_seq=sequence_legth(dictionary) # длина самой большой записи в словаре
 
+max_seq=sequence_length(dictionary) # длина самой большой записи в словаре
 print(dictionary)
-print(dictionary[3] + '    '+str(bin_code(dictionary, 'c')))
-print(str(max_seq)+'  last sequence length')
+print(dictionary[3] + '    '+str(get_index(dictionary, 'c')))
+print(str(max_seq)+'  max sequence length')
 
 
-code, dictionary=encode_file(symbols, dictionary)
+code, dictionary=encode_file(file, dictionary)
 
 print(dictionary)
 print(code)
+
+
 
 
 
