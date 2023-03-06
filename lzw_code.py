@@ -46,10 +46,17 @@
 # convert index of sequence to bin code
 # добавить нули в начало
 def get_index(dictionary, n):
-    max_index=bin(len(dictionary)-1).replace("0b", "")
+    # максимальное количество цифр в индексе
+    max_index=len(bin(len(dictionary)-1).replace("0b", ""))
+    # print(str(max_index)+' max_index')
 
+    # количество цифр в индексе
+    current_index=str(bin(dictionary.index(n)).replace("0b", ""))
 
-    return bin(dictionary.index(n)).replace("0b", "")
+    # добавить нули в начало
+    while len(current_index)<max_index:
+        current_index='0'+current_index
+    return current_index
 
 
 # reading file
@@ -81,32 +88,58 @@ def sequence_length(dictionary):
 
 ### encoding sequence of symbols
 def encode_file(file, dictionary):
-    last_seq=''
-    # предыдущая последовательность
+    last_seq='' # предыдущая последовательность
+    max_seq=sequence_length(dictionary)
+
+    step=0
+
     code='' # зашифрованный файл
 
     ### пока не закончится файл
     while file!='':
+        # steps
+        print('step № '+str(step))
+
+        # current sequence max length
         current_seq=file[:max_seq]
+        print('current sequence: '+current_seq)
 
         # если самая большая последовательность уже есть в словаре
-        if current_seq not in dictionary:
-            i=1
-            while len(current_seq)>1 or current_seq not in dictionary:
-                current_seq=current_seq[:max_seq-i]
-                i+=1
+
+        # if current_seq in dictionary:
+        #     pass
+        # else:
+        #     dictionary.append(last_seq+current_seq[0])
+        #     max_seq = sequence_length(dictionary)  # длина самой большой записи в словаре
+        #     last_seq=current_seq
+
+        while current_seq not in dictionary:
+            current_seq=current_seq[1:]
+        if (last_seq+current_seq[0]) not in dictionary:
+            dictionary.append(last_seq + current_seq[0])
+            max_seq = sequence_length(dictionary)  # длина самой большой записи в словаре
+
 
         # добавляем к коду индекс последовательности
         # сокращаем последовательность
         # last seq=cur seq
         # max seq
-        code+='  '+ get_index(dictionary, current_seq)
 
-        print (current_seq)
-        print(code)
+        code+=get_index(dictionary, current_seq)+'  '
+
+        # print(current_seq)
+        print('code: '+code)
+        print('file: '+file)
+        # print(str(max_seq)+' max seq')
+        print('dictionary: '+str(dictionary))
 
         last_seq = current_seq
         file = file[max_seq + 1:-1]
+
+        # print debug steps
+        step+=1
+        print('\n')
+
 
 
 
@@ -130,16 +163,15 @@ file=read_file('input_file') # последовательность символ
 dictionary=init_dict(file) # начальный словарь
 # code=''
 
-max_seq=sequence_length(dictionary) # длина самой большой записи в словаре
-print(dictionary)
-print(dictionary[3] + '    '+str(get_index(dictionary, 'c')))
-print(str(max_seq)+'  max sequence length')
+# print(dictionary)
+# print(dictionary[3] + '    '+str(get_index(dictionary, 'c')))
+# print(str(max_seq)+'  max sequence length')
 
 
 code, dictionary=encode_file(file, dictionary)
 
-print(dictionary)
-print(code)
+# print(dictionary)
+# print(code)
 
 
 
