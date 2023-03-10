@@ -88,7 +88,7 @@ def max_length(dictionary):
 # найти самый длинный код в словаре
 # (decoding)
 def max_index(dictionary):
-    return len(bin(len(dictionary)-1).replace("0b", ""))
+    return len(bin(len(dictionary)).replace("0b", ""))
 
 
 # get sequence from dictionary by index
@@ -97,7 +97,7 @@ def get_sequence(dictionary, bin_ind):
     # convert bin code to decimal index
     # bin_ind=int(bin(int(bin_ind)), 2)
     ind=int('0b'+bin_ind, 2)
-    print('get_sequence: ', ind)
+    # print('get_sequence: ', ind)
 
 
     return dictionary[ind]
@@ -125,20 +125,21 @@ def encode(file):
     max_seq=max_length(dictionary)
 
     # steps
-    # step=0
+    step=0
 
     ### пока не закончится файл
     while file!='':
         # steps
-        # print('step № '+str(step))
+        print('step № '+str(step))
 
         # из файла берется последовательность символов,
         # длина которой равна длине самой большой последовательности в словаре
         current_seq=file[:max_seq]
+        print('sequence: '+current_seq)
 
         # пока последовательности нет в словаре укорачивается на 1
         while current_seq not in dictionary:
-            current_seq=current_seq[1:]
+            current_seq=current_seq[:-1]
 
         # добавление новой последовательности (предыдущая+первый символ текущей)
         if (last_seq+current_seq[0]) not in dictionary:
@@ -151,19 +152,20 @@ def encode(file):
         code+=get_index(dictionary, current_seq)
 
         # print
-        # print('current sequence: ' + current_seq)
-        # print('code: '+code)
-        # print('file: '+file)
+        print('current sequence: ' + current_seq)
+        print('index: '+get_index(dictionary, current_seq))
+        print('code: '+code)
+        print('file: '+file)
         print('dictionary: '+str(dictionary))
 
         # обновляется предыдущая последовательность символов
         last_seq = current_seq
         # из начала файла удаляются зашифрованные символы
-        file = file[max_seq + 1:-1]
+        file = file[len(current_seq):]
 
         # steps
-        # step+=1
-        # print('\n')
+        step+=1
+        print('\n')
 
     return code
 
@@ -227,7 +229,8 @@ def decode(code, dictionary):
         # обновляется предыдущая последовательность символов
         last_seq = current_seq                                  ############      !!!!!!!!!!!! last seq
         # из начала файла удаляются зашифрованные символы
-        code = code[max_num + 1:-1]
+        # code = code[max_num + 1:-1]
+        code = code[len(str(current_code)):]
 
         # steps
         step+=1
@@ -259,11 +262,18 @@ decoded_file=decode(code, dictionary)
 print('DECODED CODE: '+decoded_file+'\n')
 
 
-# 0000100010100000001001001000100110000100000111100001101111001100100001010
-# 000b000b10000b100b100000b0000b1000b1000b10000b10010b100000b1000000b10b11100000b1100b1111000b11000b100000b1010
+# daecbeadcebadbcedabcedeebbabedbebbeabababaedbcdeabcdeabcedacbedabcedebacbabedcbea
+# decoded:
+# daecbeadcebadbcedabcedeebbabedbebbeabababaedbcdeabcdeabcedacbedabcedebacbabedcbea
 #
 # dictionary: ['d', 'a', 'e', 'c', 'b', 'de', 'ea', 'ae', 'ed', 'eb', 'be',
 #               'ede', 'ebe', 'edb', 'ba', 'ab', 'bac', 'ca', 'abe', 'eae']
+
+
+
+# abcdedf
+# ['a', 'b', 'c', 'd', 'e', 'f', 'ab', 'bd', 'de', 'ef', 'ff']
+#  ['a', 'b', 'c', 'd', 'e', 'f', 'ab', 'bd', 'dc', 'cf', 'ff']
 
 
 
