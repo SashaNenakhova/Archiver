@@ -4,10 +4,19 @@
 def read_file(file_name):
     try:
         file=open(file_name, 'r')
-        return file.read()
+        dict=[]
+        a=file.readline()
+        while 'Coded file:' not in a:
+            if a!='\n':
+                a=a.rstrip('\n')
+            dict.append(a)
+            a=file.readline()
+        code=file.readline()
+        return dict, code
 
     except:
         pass
+
 
 # найти самый длинный код в словаре
 # (decoding)
@@ -117,12 +126,18 @@ def decode(code, dictionary):
 
 # чтение заархивированного файла
 file_name='input_file_archive'
-file=read_file(file_name).split('\n')
+# file=
+initial_dictionary, code=read_file(file_name)
 
 # чтение кода и начального словаря из файла
-code=file[1]
-initial_dictionary=[]
-initial_dictionary.extend(file[0])
+# code=file[1]
+# initial_dictionary=[]
+# initial_dictionary.extend(file[0])
+
+print('CODE: '+code+'\n')
+print('INIT DICT: '+str(initial_dictionary))
+
+
 
 
 # расшифровка файла

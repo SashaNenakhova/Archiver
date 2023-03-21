@@ -14,8 +14,22 @@ def read_file(file_name):
 # (encoding)
 def compress_file(code, initial_dictionary, file_name):
     file=open(file_name+'_archive', 'w')
-    file.write(initial_dictionary+'\n')
+    # initial_dictionary=initial_dictionary.replace("\n", "\\n").split('')
+
+
+    # file.write(str(initial_dictionary)+'\n')
+    for i in initial_dictionary:
+        if i!='\n':
+            file.write(i+'\n')
+        else:
+            file.write(i)
+
+    file.write('Coded file:'+'\n')
     file.write(code)
+    file.close()
+
+
+
 
 
 # creating initial dict
@@ -68,7 +82,8 @@ def encode(file):
     dictionary=init_dict(file)
 
     # сохранение начального словаря для записи в зашифрованный файл
-    initial_dictionary=''.join(init_dict(file))
+    # initial_dictionary=''.join(init_dict(file))
+    initial_dictionary=init_dict(file)
 
     # зашифрованный файл
     code = ''
@@ -152,7 +167,7 @@ print('FILE: '+file+'\n')
 code, dict=encode(file)
 
 print('CODE: '+code+'\n')
-print('INIT DICTIONARY: '+dict+'\n')
+print('INIT DICTIONARY: '+str(dict)+'\n')
 
 # change compressed_file
 # записать словарь и код в зашифрованный файл
