@@ -77,7 +77,7 @@ def max_length(dictionary):
 
 
 ### encoding sequence of symbols
-def encode(file):
+def lzw_encode(file):
     # создание начального словаря
     dictionary=init_dict(file)
 
@@ -164,7 +164,7 @@ print('FILE: '+file+'\n')
 
 
 # кодирование файла
-code, dict=encode(file)
+code, dict=lzw_encode(file)
 
 print('CODE: '+code+'\n')
 print('INIT DICTIONARY: '+str(dict)+'\n')

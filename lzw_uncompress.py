@@ -57,7 +57,7 @@ def uncompress_file(decoded_file, file_name):
 
 
 ### decoding
-def decode(code, dictionary):
+def lzw_decode(code, dictionary):
     # расшифрованный файл
     file=''
 
@@ -126,7 +126,6 @@ def decode(code, dictionary):
 
 # чтение заархивированного файла
 file_name='input_file_archive'
-# file=
 initial_dictionary, code=read_file(file_name)
 
 # чтение кода и начального словаря из файла
@@ -141,7 +140,7 @@ print('INIT DICT: '+str(initial_dictionary))
 
 
 # расшифровка файла
-decoded_file=decode(code, initial_dictionary)
+decoded_file=lzw_decode(code, initial_dictionary)
 
 print('DECODED CODE: '+decoded_file+'\n')
 
