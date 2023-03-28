@@ -1,10 +1,22 @@
 
 # reading file
 # (encoding)
-def read_file(file_name):
+# def read_file(file_name):
+#     try:
+#         file=open(file_name, 'r')
+#         return file.read()
+#     except:
+#         pass
+
+
+# read hex data (bytes) from file
+# (encoding)
+def read_file_data(file_name):
     try:
-        file=open(file_name, 'r')
-        return file.read()
+        file = open(file_name, 'rb')
+        data = file.read()
+        hex_data = ''.join('{:02x}'.format(byte) for byte in data)
+        return hex_data
     except:
         pass
 
@@ -12,23 +24,47 @@ def read_file(file_name):
 # creating compressed file
 # writing initial dictionary and coded file
 # (encoding)
+# def compress_file(code, initial_dictionary, file_name):
+#     file=open(file_name+'_archive', 'w')
+#     # initial_dictionary=initial_dictionary.replace("\n", "\\n").split('')
+#
+#
+#     # file.write(str(initial_dictionary)+'\n')
+#     for i in initial_dictionary:
+#         if i!='\n':
+#             file.write(i+'\n')
+#         else:
+#             file.write(i)
+#
+#     file.write('Coded file:'+'\n')
+#     file.write(code)
+#     file.close()
+
+# creating compressed file
+# writing initial dictionary and binary coded file
+# (encoding)
 def compress_file(code, initial_dictionary, file_name):
+    ### initial dictionary
+
     file=open(file_name+'_archive', 'w')
     # initial_dictionary=initial_dictionary.replace("\n", "\\n").split('')
-
-
-    # file.write(str(initial_dictionary)+'\n')
     for i in initial_dictionary:
         if i!='\n':
             file.write(i+'\n')
         else:
             file.write(i)
 
-    file.write('Coded file:'+'\n')
-    file.write(code)
+
+    ### binary code
+    # Convert binary string to bytes
+    code = bytearray(int(code[i:i + 8], 2) for i in range(0, len(code), 8))
+
+    file.write('Coded file:' + '\n')
     file.close()
 
-
+    file = open(file_name + '_archive', 'ab')
+    file.write(code)
+    file.close()
 
 
 
@@ -94,13 +130,8 @@ def lzw_encode(file):
     # длина самой большой последовательности из словаря
     max_seq=max_length(dictionary)
 
-    # steps
-    # step=0
-
     ### пока не закончится файл
     while file!='':
-        # steps
-        # print('step № '+str(step))
 
         # из файла берется последовательность символов,
         # длина которой равна длине самой большой последовательности в словаре
@@ -121,21 +152,11 @@ def lzw_encode(file):
         # добавляем к коду индекс последовательности
         code+=get_index(dictionary, current_seq)
 
-        # print
-        # print('current sequence: ' + current_seq)
-        # print('index: '+get_index(dictionary, current_seq))
-        # print('code: '+code)
-        # print('file: '+file)
-        # print('dictionary: '+str(dictionary))
-
         # обновляется предыдущая последовательность символов
         last_seq = current_seq
         # из начала файла удаляются зашифрованные символы
         file = file[len(current_seq):]
 
-        # steps
-        # step+=1
-        # print('\n')
 
     return code, initial_dictionary
 
@@ -157,14 +178,14 @@ def lzw_encode(file):
 
 # чтение файла
 file_name='input_file'
-file=read_file(file_name)
+hex_data=read_file_data(file_name)
 
-print('FILE: '+file+'\n')
-
+# print('FILE: '+str(file)+'\n')
+print('FILE: '+hex_data+'\n')
 
 
 # кодирование файла
-code, dict=lzw_encode(file)
+code, dict=lzw_encode(hex_data)
 
 print('CODE: '+code+'\n')
 print('INIT DICTIONARY: '+str(dict)+'\n')
