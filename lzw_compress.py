@@ -1,14 +1,3 @@
-
-# reading file
-# (encoding)
-# def read_file(file_name):
-#     try:
-#         file=open(file_name, 'r')
-#         return file.read()
-#     except:
-#         pass
-
-
 # read hex data (bytes) from file
 # (encoding)
 def read_file_data(file_name):
@@ -21,50 +10,46 @@ def read_file_data(file_name):
         pass
 
 
-# creating compressed file
-# writing initial dictionary and coded file
-# (encoding)
 # def compress_file(code, initial_dictionary, file_name):
-#     file=open(file_name+'_archive', 'w')
-#     # initial_dictionary=initial_dictionary.replace("\n", "\\n").split('')
+#     file = open(file_name + '_archive', 'wb')
 #
+#     ### initial dictionary
+#     # write length of initial dictionary in 4 bytes
+#     l=len(initial_dictionary)
+#     l=format(l, '0>32b')
+#     # print('l', l)
+#     l=bytearray(int(l, 2))
+#     file.write(l)
 #
-#     # file.write(str(initial_dictionary)+'\n')
+#     # write initial dictionary in binary format
 #     for i in initial_dictionary:
-#         if i!='\n':
-#             file.write(i+'\n')
-#         else:
-#             file.write(i)
+#         # file.write(bytearray(format(ord(i), 'b')))
+#         file.write(bytearray(int(format(ord(i), 'b'), 2)))
 #
-#     file.write('Coded file:'+'\n')
+#     ### binary code
+#     # Convert binary string to bytes
+#
+#     code = bytearray(int(code[i:i + 8], 2) for i in range(0, len(code), 8))
+#     # file.write('Coded file:' + '\n')
+#     # file = open(file_name + '_archive', 'ab')
 #     file.write(code)
 #     file.close()
 
-# creating compressed file
-# writing initial dictionary and binary coded file
-# (encoding)
-def compress_file(code, initial_dictionary, file_name):
-    ### initial dictionary
 
-    file=open(file_name+'_archive', 'w')
-    # initial_dictionary=initial_dictionary.replace("\n", "\\n").split('')
-    for i in initial_dictionary:
-        if i!='\n':
-            file.write(i+'\n')
-        else:
-            file.write(i)
-
-
-    ### binary code
-    # Convert binary string to bytes
-    code = bytearray(int(code[i:i + 8], 2) for i in range(0, len(code), 8))
-
-    file.write('Coded file:' + '\n')
-    file.close()
-
+# converts data to bytes and writes to file
+def write_to_file(data, file_name):
     file = open(file_name + '_archive', 'ab')
-    file.write(code)
+
+
+    # data = bytearray(int(data[i:i + 8], 2) for i in range(0, len(data), 8))
+
+    # print(data)
+    # print('\n')
+
+    file.write(data)
     file.close()
+
+
 
 
 
@@ -85,12 +70,11 @@ def init_dict(symbols):
 def get_index(dictionary, n):
     # количество цифр в индексе последовательности n
     current_index=str(bin(dictionary.index(n)).replace("0b", ""))
-    # current_index = str(bin(dictionary.index(n)))
 
     # добавлять нули в начало, пока длина индекса не равна количеству цифр в самом большом индексе
     while len(current_index)<len(bin(len(dictionary)-1).replace("0b", "")):
-    # while len(current_index) < len(bin(len(dictionary) - 1)):
         current_index='0'+current_index
+
     return current_index
 
 
@@ -104,39 +88,26 @@ def max_length(dictionary):
     return l
 
 
-
-
-
-
-
-
-
-
-### encoding sequence of symbols
+# encoding sequence of symbols
 def lzw_encode(file):
     # создание начального словаря
-    dictionary=init_dict(file)
-
-    # сохранение начального словаря для записи в зашифрованный файл
-    # initial_dictionary=''.join(init_dict(file))
-    initial_dictionary=init_dict(file)
+    dictionary = init_dict(file)
 
     # зашифрованный файл
     code = ''
 
     # предыдущая последовательность
-    last_seq=''
+    last_seq = ''
 
     # длина самой большой последовательности из словаря
-    max_seq=max_length(dictionary)
+    max_seq = max_length(dictionary)
 
-    ### пока не закончится файл
-    while file!='':
+    # пока не закончится файл
+    while file != '':
 
         # из файла берется последовательность символов,
         # длина которой равна длине самой большой последовательности в словаре
         current_seq=file[:max_seq]
-        # print('sequence: '+current_seq)
 
         # пока последовательности нет в словаре укорачивается на 1
         while current_seq not in dictionary:
@@ -148,19 +119,56 @@ def lzw_encode(file):
             # длина самой большой записи в словаре
             max_seq = max_length(dictionary)
 
-
         # добавляем к коду индекс последовательности
-        code+=get_index(dictionary, current_seq)
+        code += get_index(dictionary, current_seq)
 
         # обновляется предыдущая последовательность символов
         last_seq = current_seq
         # из начала файла удаляются зашифрованные символы
         file = file[len(current_seq):]
 
+    return code
 
-    return code, initial_dictionary
 
 
+def encode_by_parts(hex_data, file_name):
+    # creating/cleaning file
+    f=open(file_name+'_archive', 'w')
+    f.close()
+
+    # write format
+    # letters to bytes
+
+    b=bytearray(b'LZW\x00')
+    write_to_file(b, file_name)
+
+
+    # write len init dictionary
+    # write init dictionary
+    initial_dictionary = init_dict(hex_data)
+    l=len(initial_dictionary)
+    write_to_file(bytearray([l])+b'\x00\x00\x00', file_name)
+
+    print(initial_dictionary)
+    for i in initial_dictionary:
+        print(bytearray([ord(i)]))
+        write_to_file(bytearray([ord(i)]), file_name)
+
+
+
+    # encode and write file by parts
+    while hex_data != '':
+
+        # encoding parts
+        part = hex_data[:64]
+        hex_data = hex_data[64:]
+        code = lzw_encode(part)
+        # print(code)
+
+        bytes= bytearray(int(code[i:i + 8], 2) for i in range(0, len(code), 8))
+
+        # writing parts
+        write_to_file(bytes, file_name)
 
 
 
@@ -180,16 +188,7 @@ def lzw_encode(file):
 file_name='input_file'
 hex_data=read_file_data(file_name)
 
-# print('FILE: '+str(file)+'\n')
-print('FILE: '+hex_data+'\n')
-
+print('\n'+'FILE: '+str(hex_data)+'\n')
 
 # кодирование файла
-code, dict=lzw_encode(hex_data)
-
-print('CODE: '+code+'\n')
-print('INIT DICTIONARY: '+str(dict)+'\n')
-
-# change compressed_file
-# записать словарь и код в зашифрованный файл
-compress_file(code, dict, file_name)
+encode_by_parts(hex_data, file_name)
