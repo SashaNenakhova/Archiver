@@ -1,66 +1,10 @@
-# read hex data (bytes) from file
-# (encoding)
-def read_file_data(file_name):
-    try:
-        file = open(file_name, 'rb')
-        data = file.read()
-        hex_data = ''.join('{:02x}'.format(byte) for byte in data)
-        return hex_data
-    except:
-        pass
-
-
-# def compress_file(code, initial_dictionary, file_name):
-#     file = open(file_name + '_archive', 'wb')
-#
-#     ### initial dictionary
-#     # write length of initial dictionary in 4 bytes
-#     l=len(initial_dictionary)
-#     l=format(l, '0>32b')
-#     # print('l', l)
-#     l=bytearray(int(l, 2))
-#     file.write(l)
-#
-#     # write initial dictionary in binary format
-#     for i in initial_dictionary:
-#         # file.write(bytearray(format(ord(i), 'b')))
-#         file.write(bytearray(int(format(ord(i), 'b'), 2)))
-#
-#     ### binary code
-#     # Convert binary string to bytes
-#
-#     code = bytearray(int(code[i:i + 8], 2) for i in range(0, len(code), 8))
-#     # file.write('Coded file:' + '\n')
-#     # file = open(file_name + '_archive', 'ab')
-#     file.write(code)
-#     file.close()
 
 
 # converts data to bytes and writes to file
 def write_to_file(data, file_name):
-    file = open(file_name + '_archive', 'ab')
-
-
-    # data = bytearray(int(data[i:i + 8], 2) for i in range(0, len(data), 8))
-
-    # print(data)
-    # print('\n')
-
+    file = open(file_name + '_archive2', 'ab')
     file.write(data)
     file.close()
-
-
-
-
-
-# creating initial dict
-# (encoding)
-def init_dict(symbols):
-    dictionary=[]
-    for i in symbols:
-        if i not in dictionary:
-            dictionary.append(i)
-    return dictionary
 
 
 # get dictionary index of sequence
@@ -89,9 +33,7 @@ def max_length(dictionary):
 
 
 # encoding sequence of symbols
-def lzw_encode(file):
-    # создание начального словаря
-    dictionary = init_dict(file)
+def lzw_encode(chunk):
 
     # зашифрованный файл
     code = ''
@@ -103,11 +45,11 @@ def lzw_encode(file):
     max_seq = max_length(dictionary)
 
     # пока не закончится файл
-    while file != '':
+    while chunk != '':
 
         # из файла берется последовательность символов,
         # длина которой равна длине самой большой последовательности в словаре
-        current_seq=file[:max_seq]
+        current_seq=chunk[:max_seq]
 
         # пока последовательности нет в словаре укорачивается на 1
         while current_seq not in dictionary:
@@ -125,49 +67,42 @@ def lzw_encode(file):
         # обновляется предыдущая последовательность символов
         last_seq = current_seq
         # из начала файла удаляются зашифрованные символы
-        file = file[len(current_seq):]
+        chunk = chunk[len(current_seq):]
 
     return code
 
 
 
-def encode_by_parts(hex_data, file_name):
+def encode_by_parts(file_name):
     # creating/cleaning file
-    f=open(file_name+'_archive', 'w')
-    f.close()
+    res=open(file_name+'_archive2', 'w')
+    res.close()
 
     # write format
-    # letters to bytes
-
-    b=bytearray(b'LZW\x00')
+    b = bytearray(b'LZW\x00')
     write_to_file(b, file_name)
 
 
-    # write len init dictionary
-    # write init dictionary
-    initial_dictionary = init_dict(hex_data)
-    l=len(initial_dictionary)
-    write_to_file(bytearray([l])+b'\x00\x00\x00', file_name)
+    f=open(file_name, 'rb')
 
-    print(initial_dictionary)
-    for i in initial_dictionary:
-        print(bytearray([ord(i)]))
-        write_to_file(bytearray([ord(i)]), file_name)
-
-
+    # chunk_size = 64 * 1024 # 64KB in bytes
+    chunk_size = 64
 
     # encode and write file by parts
-    while hex_data != '':
+    while True:
 
         # encoding parts
-        part = hex_data[:64]
-        hex_data = hex_data[64:]
-        code = lzw_encode(part)
+        chunk=f.read(chunk_size)
+        if not chunk:
+            break
+        hex_chunk = ''.join('{:02x}'.format(byte) for byte in chunk)
+        # print(hex_chunk)
+        code = lzw_encode(hex_chunk)
         # print(code)
 
         bytes= bytearray(int(code[i:i + 8], 2) for i in range(0, len(code), 8))
 
-        # writing parts
+        # writing to file
         write_to_file(bytes, file_name)
 
 
@@ -182,13 +117,14 @@ def encode_by_parts(hex_data, file_name):
 
 ### MAIN ###
 
-### прочитать файл, создать в зашифрованном файле начальный словарь в виде строки ('abcdef')
-
 # чтение файла
 file_name='input_file'
-hex_data=read_file_data(file_name)
 
-print('\n'+'FILE: '+str(hex_data)+'\n')
+# create initial dictionary and global dictionary for encoding
+global dictionary
+init_dict=[i for i in 'd09fbe182c35a764']
+dictionary=init_dict.copy()
+
 
 # кодирование файла
-encode_by_parts(hex_data, file_name)
+encode_by_parts(file_name)
