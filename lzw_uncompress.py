@@ -1,47 +1,25 @@
+import sys
 
-# reading file
-# (encoding)
-def read_file(file_name):
-    try:
-        file=open(file_name, 'r')
-        dict=[]
-        a=file.readline()
-        while 'Coded file:' not in a:
-            if a!='\n':
-                a=a.rstrip('\n')
-            dict.append(a)
-            a=file.readline()
-        code=file.readline()
-        return dict, code
-
-    except:
-        pass
 
 
 # найти самый длинный код в словаре
 # (decoding)
-def max_index(dictionary):
+def max_index():
     return len(bin(len(dictionary)).replace("0b", ""))
 
 
 # get sequence from dictionary by index
 # (decoding)
-def get_sequence(dictionary, bin_ind):
+def get_sequence(bin_ind):
     # convert bin code to decimal index
-    # bin_ind=int(bin(int(bin_ind)), 2)
+
     ind=int('0b'+bin_ind, 2)
-    # print('get_sequence: ', ind)
+
 
 
     return dictionary[ind]
 
 
-# creating uncompressed file
-# (decoding)
-def uncompress_file(decoded_file, file_name):
-    file = open(file_name+'_uncompressed', 'w')
-    file.write(decoded_file)
-    file.close()
 
 
 
@@ -57,7 +35,7 @@ def uncompress_file(decoded_file, file_name):
 
 
 ### decoding
-def lzw_decode(code, dictionary):
+def lzw_decode(code):
     # расшифрованный файл
     file=''
 
@@ -65,26 +43,22 @@ def lzw_decode(code, dictionary):
     last_seq = ''
 
     # длина последнего кода в словаре
-    max_num=max_index(dictionary)
+    max_num=max_index()
 
-    # steps
-    # step=0
 
     # пока не закончится зашифрованный файл
     while code!='':
-        # steps
-        # print('step № '+str(step))
 
         # из зашифрованного файла берется часть кода,
         # длина которой равна длине последнего кода в словаре
         current_code=code[:max_num]
-        # print('index: ' + str(current_code))
+
 
         # get sequence from the dictionary by code
         flag=False
         while flag==False:
             try:
-                current_seq=get_sequence(dictionary, current_code)
+                current_seq=get_sequence(current_code)
                 flag=True
             except:
                 current_code = current_code[:-1]
@@ -93,57 +67,99 @@ def lzw_decode(code, dictionary):
         if (last_seq+current_seq[0]) not in dictionary:
             dictionary.append(last_seq + current_seq[0])
             # длина самой большой записи в словаре
-            max_num=max_index(dictionary)
+            max_num=max_index()
 
         # добавляем к расшифрованному файлу последовательность символов
         file+=current_seq
 
-        # print
-        # print('current sequence: ' + current_seq)
-        # print('current index: ' + str(current_code))
-        # print('code: '+code)
-        # print('file: '+file)
-        # print('dictionary: '+str(dictionary))
-
         # обновляется предыдущая последовательность символов
         last_seq = current_seq                                  ############      !!!!!!!!!!!! last seq
         # из начала файла удаляются зашифрованные символы
-        # code = code[max_num + 1:-1]
+
         code = code[len(str(current_code)):]
 
-        # steps
-        # step+=1
-        # print('\n')
 
     return file
 
 
 
+def decode_by_parts(archive_name, result_name):
+    # creating result file
+    res=open(result_name, 'w')
+    res.close()
+
+    f = open(archive_name, 'rb')
+
+    # read format
+    if f.read(8)==bytearray(b'LZW\x00'):
+        print(True)
+
+    # chunk_size = 64 * 1024 # 64KB in bytes
+    chunk_size = 64
+
+
+    # decode and write file by parts
+    while True:
+
+        # decoding parts
+        chunk = f.read(chunk_size)
+        if not chunk:
+            break
+        hex_chunk = ''.join('{:02x}'.format(byte) for byte in chunk)
+        # print(hex_chunk)
+        code = lzw_encode(hex_chunk)
+        # print(code)
+
+        bytes = bytearray(int(code[i:i + 8], 2) for i in range(0, len(code), 8))
+
+        # writing to file
+        write_to_file(bytes, file_name)
+
+
+    ############################################
+    # creating/cleaning file
+    # res = open(file_name + '_archive4', 'w')
+    # res.close()
+    #
+    # # write format
+    # b = bytearray(b'LZW\x00')
+    # write_to_file(b, file_name)
+    #
+    # f = open(file_name, 'rb')
+    #
+    # # chunk_size = 64 * 1024 # 64KB in bytes
+    # chunk_size = 64
+    #
+    # # encode and write file by parts
+    # while True:
+    #
+    #     # encoding parts
+    #     chunk = f.read(chunk_size)
+    #     if not chunk:
+    #         break
+    #     hex_chunk = ''.join('{:02x}'.format(byte) for byte in chunk)
+    #     # print(hex_chunk)
+    #     code = lzw_encode(hex_chunk)
+    #     # print(code)
+    #
+    #     bytes = bytearray(int(code[i:i + 8], 2) for i in range(0, len(code), 8))
+    #
+    #     # writing to file
+    #     write_to_file(bytes, file_name)
 
 
 
 ### MAIN ###
 
-# чтение заархивированного файла
-file_name='input_file_archive'
-initial_dictionary, code=read_file(file_name)
+# чтение файла
+archive_name = sys.argv[1]
+result_name = sys.argv[2]
 
-# чтение кода и начального словаря из файла
-# code=file[1]
-# initial_dictionary=[]
-# initial_dictionary.extend(file[0])
+# create global dictionary for encoding
+global dictionary
+dictionary = [i for i in 'abcdef0123456789']
 
-print('CODE: '+code+'\n')
-print('INIT DICT: '+str(initial_dictionary))
+# кодирование файла
+decode_by_parts(archive_name, result_name)
 
-
-
-
-# расшифровка файла
-decoded_file=lzw_decode(code, initial_dictionary)
-
-print('DECODED CODE: '+decoded_file+'\n')
-
-# создать расшифрованный файл
-uncompress_file(decoded_file, file_name)
 
