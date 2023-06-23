@@ -61,7 +61,7 @@ def get_sequence(n):
 
 
 ### decoding
-def lzw_decode(hex_chunk):
+def lzw_decode(code):
     # расшифрованная последовательность
     seq=''
 
@@ -73,13 +73,13 @@ def lzw_decode(hex_chunk):
 
 
     # пока не закончится зашифрованный чанк
-    while hex_chunk!='':
-        print('lzw decoding hex chunk', hex_chunk, '\n')
+    while code!='':
+        print('lzw decoding hex chunk', code, '\n')
         print('lzw decoding dictionary', dictionary, '\n')
 
         # из зашифрованного чанка берется часть кода,
         # длина которой равна длине последнего кода в словаре
-        current_code=hex_chunk[:max_num]
+        current_code=code[:max_num]
         current_seq=''
 
 
@@ -109,7 +109,7 @@ def lzw_decode(hex_chunk):
         last_seq = current_seq
         # из начала файла удаляются зашифрованные символы
 
-        hex_chunk = hex_chunk[len(str(current_code)):]
+        code = code[len(str(current_code)):]
 
 
     return seq
@@ -144,7 +144,10 @@ def decode_by_parts(archive_name, result_name):
         hex_chunk = ''.join('{:02x}'.format(byte) for byte in chunk) # str
         print('hex chunk', hex_chunk, '\n')
 
-        seq = lzw_decode(hex_chunk)
+        # hex chunk to binary code (01100101010...)
+        code=bin(int(hex_chunk, 16))[2:].zfill(8)
+
+        seq = lzw_decode(code)
         print('decoded seq', seq, '\n')
 
 
