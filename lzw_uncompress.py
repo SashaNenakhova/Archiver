@@ -137,7 +137,6 @@ def decode_by_parts(archive_name, result_name):
         print('hex chunk', hex_chunk, '\n')
 
         # hex chunk to binary code (01100101010...)
-        # code=bin(int(hex_chunk, 16))[2:].zfill(8)
         code=hex_to_bin(hex_chunk)
 
         seq = lzw_decode(code)

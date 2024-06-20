@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="85ebf0f2-6aad-4c0d-9982-1ec793aaf547" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lzw_run_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binarytofile.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chatgptexercise.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/copy_file.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/input_file" beforeDir="false" afterPath="$PROJECT_DIR$/input_file" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lzw code" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lzw_code.py" beforeDir="false" afterPath="$PROJECT_DIR$/lzw_code.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lzw_compress.py" beforeDir="false" afterPath="$PROJECT_DIR$/lzw_compress.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Archiver-exercises/bytearray_tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lzw_uncompress.py" beforeDir="false" afterPath="$PROJECT_DIR$/lzw_uncompress.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/read_by_chunks.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +46,7 @@
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
   </component>
-  <component name="RunManager" selected="Python.lzw_run_test">
+  <component name="RunManager" selected="Python.bytearray_tests">
     <configuration name="binarytofile" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Archiver" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -75,19 +68,19 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="lzw_code" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Archiver" />
+    <configuration name="bytearray_tests" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="SDK_HOME" value="$USER_HOME$/Exercises/pycharmLearn/venv/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Archiver-exercises" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lzw_code.py" />
+      <module name="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Archiver-exercises/bytearray_tests.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -183,18 +176,18 @@
     <list>
       <item itemvalue="Python.sort123123123" />
       <item itemvalue="Python.binarytofile" />
-      <item itemvalue="Python.lzw_code" />
       <item itemvalue="Python.lzw_compress" />
       <item itemvalue="Python.lzw_uncompress" />
       <item itemvalue="Python.lzw_run_test" />
+      <item itemvalue="Python.bytearray_tests" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.bytearray_tests" />
         <item itemvalue="Python.lzw_run_test" />
         <item itemvalue="Python.lzw_uncompress" />
         <item itemvalue="Python.lzw_compress" />
         <item itemvalue="Python.binarytofile" />
-        <item itemvalue="Python.lzw_code" />
       </list>
     </recent_temporary>
   </component>
@@ -271,7 +264,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/lzw_uncompress.py</url>
-          <line>142</line>
+          <line>141</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -361,7 +354,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/lzw_uncompress.py</url>
-          <line>139</line>
+          <line>138</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -371,7 +364,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/lzw_uncompress.py</url>
-          <line>140</line>
+          <line>139</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
       </breakpoints>
