@@ -1,39 +1,31 @@
 import sys
 
 # writes decoded bytes to file
-def write_to_file(seq, result_name):
+def write_result(seq, result_name):
     file = open(result_name, 'ab')
     file.write(seq)
     file.close()
 
 # finds max index for bytes
 def max_index():
-    return len(dictionary)
-
-# # найти самый длинный код в словаре
-# # (decoding)
-# def max_index():
-#     print('max index', len(bin(len(dictionary)).replace("0b", "")), '\n')
-#     return len(bin(len(dictionary)).replace("0b", ""))
-#
-#
+    # return len(dictionary)
+    return len(bin(len(dictionary)))-1 #####
 
 
+# decodes hex chunk to code
+def hex_to_bin(hex_chunk):
+    code=''
+
+    for i in hex_chunk:
+        current_code = str(bin(dictionary.index(i)).replace("0b", ""))
+        # добавлять нули в начало, пока длина индекса не равна количеству цифр в самом большом индексе
+        while len(current_code) < len(bin(len(dictionary) - 1).replace("0b", "")):
+            current_code = '0' + current_code
+        code+=current_code
+    return code
 
 
 
-# # get hex sequence from dictionary by index
-# def get_sequence(indx):
-#     ind=
-
-
-# # get sequence from dictionary by index
-# # (decoding)
-# def get_sequence(bin_ind):
-#     # convert bin code to decimal index
-#     ind=int('0b'+bin_ind, 2)
-#
-#     return dictionary[ind]
 
 # get dictionary index of sequence
 # convert dictionary index of sequence to bin code
@@ -42,7 +34,7 @@ def max_index():
 def get_sequence(n):
     # количество цифр в индексе последовательности n
     # current_seq = str(bin(dictionary[n.replace("0b", "")]))
-    current_seq = str((dictionary[int(n)]))
+    current_seq = str((dictionary[int(n, 2)]))
     pass
 
     # # добавлять нули в начало, пока длина индекса не равна количеству цифр в самом большом индексе
@@ -74,7 +66,7 @@ def lzw_decode(code):
 
     # пока не закончится зашифрованный чанк
     while code!='':
-        print('lzw decoding hex chunk', code, '\n')
+        print('lzw decoding chunk', code)
         print('lzw decoding dictionary', dictionary, '\n')
 
         # из зашифрованного чанка берется часть кода,
@@ -86,14 +78,14 @@ def lzw_decode(code):
         # get sequence from the dictionary by code
         flag=False
         while flag==False and current_code!='':  ######## while flag==False
-            print('current code', current_code)
-            print('current seq', current_seq)
             try:
                 current_seq=get_sequence(current_code)
                 flag=True
 
             except:
                 current_code = current_code[:-1]
+        print('current code', current_code)
+        print('current seq', current_seq)
 
 
         # add new sequence to the dictionary
@@ -145,7 +137,8 @@ def decode_by_parts(archive_name, result_name):
         print('hex chunk', hex_chunk, '\n')
 
         # hex chunk to binary code (01100101010...)
-        code=bin(int(hex_chunk, 16))[2:].zfill(8)
+        # code=bin(int(hex_chunk, 16))[2:].zfill(8)
+        code=hex_to_bin(hex_chunk)
 
         seq = lzw_decode(code)
         print('decoded seq', seq, '\n')
@@ -156,7 +149,7 @@ def decode_by_parts(archive_name, result_name):
 
 
         # writing to file
-        write_to_file(bytes, result_name)
+        write_result(bytes, result_name)
 
 
 

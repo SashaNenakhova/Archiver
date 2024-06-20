@@ -3,7 +3,7 @@ import sys
 
 # converts data to bytes and writes to file
 def write_to_file(data, file_name):
-    file = open(file_name + '_archive5', 'ab')
+    file = open(file_name + '_archive', 'ab')
     file.write(data)
     file.close()
 
@@ -74,7 +74,7 @@ def lzw_encode(chunk):
 
 def encode_by_parts(file_name):
     # creating/cleaning file
-    res = open(file_name + '_archive5', 'w')
+    res = open(file_name + '_archive', 'w')
     res.close()
 
     # write format
@@ -108,6 +108,8 @@ def encode_by_parts(file_name):
 
 # чтение файла
 file_name = sys.argv[1]
+# file_name="input_file"
+
 
 # create global dictionary for encoding
 global dictionary
@@ -115,3 +117,5 @@ dictionary = [i for i in 'abcdef0123456789']
 
 # кодирование файла
 encode_by_parts(file_name)
+
+print("\n", "LZW_COMPRESS - DICTIONARY", dictionary, "\n")
