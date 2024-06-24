@@ -12,7 +12,7 @@ def max_index():
     return len(bin(len(dictionary)))-1 #####
 
 
-# decodes hex chunk to code
+# decodes hex chunk to binary code
 def hex_to_bin(hex_chunk):
     code=''
 
@@ -133,8 +133,10 @@ def decode_by_parts(archive_name, result_name):
 
         print('byte chunk from file', chunk, '\n')
 
+        # hex chunk looks exactly like bytes in hex fiend (archived file)
         hex_chunk = ''.join('{:02x}'.format(byte) for byte in chunk) # str
-        print('hex chunk', hex_chunk, '\n')
+        print('HEX CHUNK', hex_chunk, '\n')
+
 
         # hex chunk to binary code (01100101010...)
         code=hex_to_bin(hex_chunk)
@@ -143,7 +145,7 @@ def decode_by_parts(archive_name, result_name):
         print('decoded seq', seq, '\n')
 
         print("int(seq)", int(seq[0:0+8], 16))
-        bytes = bytearray(int(seq[i:i + 1], 16) for i in range(0, len(seq), 8))
+        bytes = bytearray(int(seq[i:i + 2], 16) for i in range(0, len(seq), 2))
         print('bytes', bytes)
 
 

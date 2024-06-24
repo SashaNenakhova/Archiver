@@ -84,7 +84,7 @@ def encode_by_parts(file_name):
     f = open(file_name, 'rb')
 
     # chunk_size = 64 * 1024 # 64KB in bytes
-    chunk_size = 64
+    chunk_size = 64 # 32 bytes
 
     # encode and write file by parts
     while True:
@@ -93,15 +93,18 @@ def encode_by_parts(file_name):
         chunk = f.read(chunk_size)
         if not chunk:
             break
+
+        # hex chunk looks exactly like bytes in hex fiend
         hex_chunk = ''.join('{:02x}'.format(byte) for byte in chunk)
-        # print(hex_chunk)
+        # print("ENCODING: HEX CHUNK", hex_chunk)
+
         code = lzw_encode(hex_chunk)
         print(code)
 
-        bytes = bytearray(int(code[i:i + 8], 2) for i in range(0, len(code), 8))
+        byte_array = bytearray(int(code[i:i + 8], 2) for i in range(0, len(code), 8))
 
         # writing to file
-        write_to_file(bytes, file_name)
+        write_to_file(byte_array, file_name)
 
 
 ### MAIN ###
