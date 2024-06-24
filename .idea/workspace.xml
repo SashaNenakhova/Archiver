@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="85ebf0f2-6aad-4c0d-9982-1ec793aaf547" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Archiver-exercises/bytearray_tests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/input_file_decoded" beforeDir="false" afterPath="$PROJECT_DIR$/input_file_decoded" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lzw_code.py" beforeDir="false" afterPath="$PROJECT_DIR$/lzw_code.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lzw_compress.py" beforeDir="false" afterPath="$PROJECT_DIR$/lzw_compress.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lzw_uncompress.py" beforeDir="false" afterPath="$PROJECT_DIR$/lzw_uncompress.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -174,12 +176,12 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.sort123123123" />
       <item itemvalue="Python.binarytofile" />
-      <item itemvalue="Python.lzw_compress" />
-      <item itemvalue="Python.lzw_uncompress" />
-      <item itemvalue="Python.lzw_run_test" />
       <item itemvalue="Python.bytearray_tests" />
+      <item itemvalue="Python.lzw_compress" />
+      <item itemvalue="Python.lzw_run_test" />
+      <item itemvalue="Python.lzw_uncompress" />
+      <item itemvalue="Python.sort123123123" />
     </list>
     <recent_temporary>
       <list>

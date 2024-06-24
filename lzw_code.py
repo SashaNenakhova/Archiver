@@ -249,7 +249,7 @@ def decode(code, dictionary):
 
 # чтение файла
 file=read_file('input_file')
-# file=read_file('angry-cat-original.gif')
+#file=read_file('angry-cat-original.gif')
 # кодирование файла
 code=encode(file)
 

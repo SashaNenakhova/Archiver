@@ -96,7 +96,7 @@ def encode_by_parts(file_name):
         hex_chunk = ''.join('{:02x}'.format(byte) for byte in chunk)
         # print(hex_chunk)
         code = lzw_encode(hex_chunk)
-        # print(code)
+        print(code)
 
         bytes = bytearray(int(code[i:i + 8], 2) for i in range(0, len(code), 8))
 

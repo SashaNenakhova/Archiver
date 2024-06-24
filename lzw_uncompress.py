@@ -142,8 +142,8 @@ def decode_by_parts(archive_name, result_name):
         seq = lzw_decode(code)
         print('decoded seq', seq, '\n')
 
-
-        bytes = bytearray(int(seq[i:i + 8], 2) for i in range(0, len(seq), 8))
+        print("int(seq)", int(seq[0:0+8], 16))
+        bytes = bytearray(int(seq[i:i + 1], 16) for i in range(0, len(seq), 8))
         print('bytes', bytes)
 
 
@@ -166,4 +166,4 @@ dictionary = [i for i in 'abcdef0123456789']
 # кодирование файла
 decode_by_parts(archive_name, result_name)
 
-
+print("UNCOMPRESSING FINISHED")
