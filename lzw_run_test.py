@@ -8,6 +8,7 @@ import subprocess
 ### run lzw_compress.py
 arg1 = "input_file"
 subprocess.run(['python3', 'lzw_compress.py', arg1])
+# subprocess.run(['python3', 'lzw_compress2__write_code.py', arg1])
 
 
 ### run lzw_uncompress.py

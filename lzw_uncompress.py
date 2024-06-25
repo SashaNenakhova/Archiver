@@ -136,10 +136,23 @@ def decode_by_parts(archive_name, result_name):
         # hex chunk looks exactly like bytes in hex fiend (archived file)
         hex_chunk = ''.join('{:02x}'.format(byte) for byte in chunk) # str
         print('HEX CHUNK', hex_chunk, '\n')
+        # 93a5094a5495a0cc3b10c498536ebf0c9038f40f4
+        # 54cb6c91571e52391551d92bd74183976cdba77499e9d4d0d1c
 
 
         # hex chunk to binary code (01100101010...)
         code=hex_to_bin(hex_chunk)
+        ### outputs code from archive
+        # 111110010000101101101111101000001011101
+        # 011111011000001100010001010010001011101100010101
+        # 01111111010111001110001000001010101100010111101101
+        # 001111001011010011001011010101110100010000111000010
+        # 1111011110111101011101001011100010011111011110111011
+        # 01110011111110000001001111011010011111101001111111011
+        # 100001000110001000011011101101011111111010011110011101
+        # 000110110001101110010
+
+
 
         seq = lzw_decode(code)
         print('decoded seq', seq, '\n')
