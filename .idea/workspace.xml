@@ -4,6 +4,7 @@
     <list default="true" id="85ebf0f2-6aad-4c0d-9982-1ec793aaf547" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/input_file_decoded" beforeDir="false" afterPath="$PROJECT_DIR$/input_file_decoded" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lzw_compress.py" beforeDir="false" afterPath="$PROJECT_DIR$/lzw_compress.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lzw_uncompress.py" beforeDir="false" afterPath="$PROJECT_DIR$/lzw_uncompress.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -218,9 +219,19 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/lzw_run_test.py</url>
-          <line>14</line>
-          <option name="timeStamp" value="31" />
+          <url>file://$PROJECT_DIR$/lzw_uncompress.py</url>
+          <line>112</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/lzw_uncompress.py</url>
+          <line>106</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/lzw_uncompress.py</url>
+          <line>93</line>
+          <option name="timeStamp" value="38" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

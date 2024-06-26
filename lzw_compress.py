@@ -63,8 +63,8 @@ def lzw_encode(chunk):
 
         # добавляем к коду индекс последовательности
         code += get_index(current_seq)
-        print("get_index(current_seq)", get_index(current_seq))
-        print("current_seq", current_seq)
+        # print("get_index(current_seq)", get_index(current_seq))
+       # print("current_seq", current_seq)
 
 
         # обновляется предыдущая последовательность символов
