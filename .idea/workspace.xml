@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="85ebf0f2-6aad-4c0d-9982-1ec793aaf547" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/input_file_decoded" beforeDir="false" afterPath="$PROJECT_DIR$/input_file_decoded" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lzw_compress.py" beforeDir="false" afterPath="$PROJECT_DIR$/lzw_compress.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lzw_uncompress.py" beforeDir="false" afterPath="$PROJECT_DIR$/lzw_uncompress.py" afterDir="false" />
     </list>
@@ -175,12 +174,12 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.sort123123123" />
       <item itemvalue="Python.binarytofile" />
       <item itemvalue="Python.bytearray_tests" />
       <item itemvalue="Python.lzw_compress" />
       <item itemvalue="Python.lzw_run_test" />
       <item itemvalue="Python.lzw_uncompress" />
+      <item itemvalue="Python.sort123123123" />
     </list>
     <recent_temporary>
       <list>
@@ -220,17 +219,17 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/lzw_uncompress.py</url>
-          <line>112</line>
+          <line>113</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/lzw_uncompress.py</url>
-          <line>106</line>
+          <line>107</line>
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/lzw_uncompress.py</url>
-          <line>93</line>
+          <line>94</line>
           <option name="timeStamp" value="38" />
         </line-breakpoint>
       </breakpoints>

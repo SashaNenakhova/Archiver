@@ -16,10 +16,13 @@ def get_index(n):
     # количество цифр в индексе последовательности n
     current_index = str(bin(dictionary.index(n)).replace("0b", ""))
 
-    # добавлять нули в начало, пока длина индекса не равна количеству цифр в самом большом индексе
+    # добавлять нули в начало, пока длина индекса
+    # не равна количеству цифр в самом большом индексе
     while len(current_index) < len(bin(len(dictionary) - 1).replace("0b", "")):
         current_index = '0' + current_index
 
+    print("GET INDEX current index", current_index)
+    print("GET INDEX len(dictionary)", len(dictionary))
     return current_index
 
 
@@ -46,7 +49,8 @@ def lzw_encode(chunk):
 
     # пока не закончится файл
     while chunk != '':
-
+        print('\n')
+        print("WHILE ITERATION started")
         # из файла берется последовательность символов,
         # длина которой равна длине самой большой последовательности в словаре
         current_seq = chunk[:max_seq]
@@ -55,11 +59,16 @@ def lzw_encode(chunk):
         while current_seq not in dictionary:
             current_seq = current_seq[:-1]
 
-        # добавление новой последовательности (предыдущая+первый символ текущей)
-        if (last_seq + current_seq[0]) not in dictionary:
-            dictionary.append(last_seq + current_seq[0])
-            # длина самой большой записи в словаре
-            max_seq = max_length()
+        print("current seq", current_seq)
+
+        # # добавление новой последовательности (предыдущая+первый символ текущей)
+        # if (last_seq + current_seq[0]) not in dictionary:
+        #     dictionary.append(last_seq + current_seq[0])
+        #     # длина самой большой записи в словаре
+        #
+        #     print("new seq appended", '\n', last_seq+current_seq[0])
+        #
+        #     max_seq = max_length()
 
         # добавляем к коду индекс последовательности
         code += get_index(current_seq)
@@ -67,10 +76,24 @@ def lzw_encode(chunk):
        # print("current_seq", current_seq)
 
 
+        # # #
+        # добавление новой последовательности (предыдущая+первый символ текущей)
+        if (last_seq + current_seq[0]) not in dictionary:
+            dictionary.append(last_seq + current_seq[0])
+            # длина самой большой записи в словаре
+
+            print("new seq appended", '\n', last_seq + current_seq[0])
+
+            max_seq = max_length()
+        # # #
+
+
         # обновляется предыдущая последовательность символов
         last_seq = current_seq
         # из начала файла удаляются зашифрованные символы
         chunk = chunk[len(current_seq):]
+
+        print("WHILE ITERATION ended")
 
     return code
 

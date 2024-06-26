@@ -9,6 +9,7 @@ def write_result(seq, result_name):
 
 # finds max index for bytes
 def max_index():
+    print('\n')
     print("len dict-1 bin", bin(len(dictionary)-1).replace("0b", "") )
     print("len dict", len(dictionary))
 
@@ -111,7 +112,7 @@ def lzw_decode(code):
         # get sequence from the dictionary by code
         flag=False
         while flag==False and current_code!='':
-            print("tryin get seq with current code", current_code)
+            print("tryin to get seq with current code", current_code)
             try:
                 current_seq=get_sequence(current_code)
                 flag=True
@@ -131,13 +132,15 @@ def lzw_decode(code):
             max_num=max_index()
             print("ADDED NEW SEQ TO DICTIONARY max index called")
 
-        # добавляем к расшифрованному файлу последовательность символов
+
+
+        # добавляем к расшифрованному чанку последовательность символов
         seq+=current_seq
 
         # обновляется предыдущая последовательность символов
         last_seq = current_seq
-        # из начала файла удаляются зашифрованные символы
 
+        # из начала файла удаляются зашифрованные символы
         code = code[len(str(current_code)):]
 
         print("WHILE CODE iteration ended")
