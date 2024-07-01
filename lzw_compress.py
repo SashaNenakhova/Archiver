@@ -21,8 +21,8 @@ def get_index(n):
     while len(current_index) < len(bin(len(dictionary) - 1).replace("0b", "")):
         current_index = '0' + current_index
 
-    print("GET INDEX current index", current_index)
-    print("GET INDEX len(dictionary)", len(dictionary))
+    # print("GET INDEX current index", current_index)
+    # print("GET INDEX len(dictionary)", len(dictionary))
     return current_index
 
 
@@ -49,8 +49,8 @@ def lzw_encode(chunk):
 
     # пока не закончится файл
     while chunk != '':
-        print('\n')
-        print("WHILE ITERATION started")
+        #print('\n')
+        #print("WHILE ITERATION started")
         # из файла берется последовательность символов,
         # длина которой равна длине самой большой последовательности в словаре
         current_seq = chunk[:max_seq]
@@ -59,21 +59,14 @@ def lzw_encode(chunk):
         while current_seq not in dictionary:
             current_seq = current_seq[:-1]
 
-        print("current seq", current_seq)
-
-        # # добавление новой последовательности (предыдущая+первый символ текущей)
-        # if (last_seq + current_seq[0]) not in dictionary:
-        #     dictionary.append(last_seq + current_seq[0])
-        #     # длина самой большой записи в словаре
-        #
-        #     print("new seq appended", '\n', last_seq+current_seq[0])
-        #
-        #     max_seq = max_length()
+        # print(current_seq)
 
         # добавляем к коду индекс последовательности
         code += get_index(current_seq)
+        print('\n')
+        print("code", get_index(current_seq))
         # print("get_index(current_seq)", get_index(current_seq))
-       # print("current_seq", current_seq)
+        print("current_seq", current_seq)
 
 
         # # #
@@ -82,7 +75,7 @@ def lzw_encode(chunk):
             dictionary.append(last_seq + current_seq[0])
             # длина самой большой записи в словаре
 
-            print("new seq appended", '\n', last_seq + current_seq[0])
+            #print("new seq appended", '\n', last_seq + current_seq[0])
 
             max_seq = max_length()
         # # #
@@ -93,7 +86,7 @@ def lzw_encode(chunk):
         # из начала файла удаляются зашифрованные символы
         chunk = chunk[len(current_seq):]
 
-        print("WHILE ITERATION ended")
+        # print("WHILE ITERATION ended")
 
     return code
 
@@ -123,23 +116,25 @@ def encode_by_parts(file_name):
         # hex chunk looks exactly like bytes in hex fiend
         hex_chunk = ''.join('{:02x}'.format(byte) for byte in chunk)
         print("\n", "ENCODING: HEX CHUNK", hex_chunk, '\n')
-        ### 3132333435206162636461626364626361626362646162636
-        # 4616264636261646362616462636
-        # 162646362616263646162636264636261646263616264626162
-        ## second chunk:
-        # 646362616362
+        ### reads chunks right
+        ##      first
+        #  313233343520616263646162636462636162636264
+        #  6162636461626463626164636261646263616264636
+        #  261626364616263626463626164 62636162 64626162
+        ##      second
+        # 64636261 6362
 
 
         code = lzw_encode(hex_chunk)
         print("binary code", code)
         ### encoded chunk written into the archive file
-        # 100100111010010100001001010010100101010010010101101000
-        # 001100110000111011000100001100010010011000010100110110
-        # 111010111111000011001001000000111000111101000000111101
-        # 000101010011001011011011001001000101010111000111100101
-        # 001000111001000101010101000111011001001010111101011101
-        # 0000011000001110010
-        # 1110110110011011011101001110111010010011001111010011101
+        # 10010111010010100001001010010100101010010010101
+        # 1010000011001100001110110001000011000100101100001
+        # 010011011011101011111100001100100100000011100011
+        # 110100000011110100010101001100101101101100100100
+        # 0101010111000111100101001000111001000101010101000
+        # 1110110010010101111010111010000011000011100101110110
+        # 110011011011101001110111010010011001111010011101
         # second chunk: 010011010000110111100
 
 
@@ -147,6 +142,7 @@ def encode_by_parts(file_name):
         print("byte array", byte_array)
         # writing to file
         write_to_file(byte_array, file_name)
+        print("written", bytearray(int(code[i:i + 8], 2) for i in range(0, len(code))))
 
 
 ### MAIN ###
@@ -154,6 +150,7 @@ def encode_by_parts(file_name):
 # чтение файла
 file_name = sys.argv[1]
 # file_name="input_file"
+
 
 
 # create global dictionary for encoding
@@ -164,6 +161,15 @@ dictionary = [i for i in 'abcdef0123456789']
 encode_by_parts(file_name)
 
 print("\n", "LZW_COMPRESS - DICTIONARY", dictionary, "\n")
+
+
+
+
+
+# 61D26361 640616 WHY
+
+
+
 
 
 

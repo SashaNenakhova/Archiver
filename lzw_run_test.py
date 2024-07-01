@@ -7,6 +7,7 @@ import subprocess
 
 ### run lzw_compress.py
 arg1 = "input_file"
+# arg1 = "angry-cat-original.gif"
 subprocess.run(['python3', 'lzw_compress.py', arg1])
 # subprocess.run(['python3', 'lzw_compress2__write_code.py', arg1])
 
@@ -14,6 +15,8 @@ subprocess.run(['python3', 'lzw_compress.py', arg1])
 ### run lzw_uncompress.py
 arg2 = "input_file_archive"
 arg3 = "input_file_decoded"
+# arg2 = "angry-cat-original_archive"
+# arg3 = "angry-cat-original_decoded"
 subprocess.run(['python3', 'lzw_uncompress.py', arg2, arg3])
 
 
