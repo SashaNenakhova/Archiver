@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="85ebf0f2-6aad-4c0d-9982-1ec793aaf547" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Archiver-exercises/binary strings" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Archiver-exercises/binary strings" beforeDir="false" afterPath="$PROJECT_DIR$/Archiver-exercises/binary strings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/input_file_decoded" beforeDir="false" afterPath="$PROJECT_DIR$/input_file_decoded" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lzw_compress.py" beforeDir="false" afterPath="$PROJECT_DIR$/lzw_compress.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lzw_run_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/lzw_run_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lzw_uncompress.py" beforeDir="false" afterPath="$PROJECT_DIR$/lzw_uncompress.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -221,17 +221,17 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/lzw_uncompress.py</url>
-          <line>97</line>
+          <line>109</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/lzw_uncompress.py</url>
-          <line>91</line>
+          <line>103</line>
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/lzw_uncompress.py</url>
-          <line>78</line>
+          <line>90</line>
           <option name="timeStamp" value="38" />
         </line-breakpoint>
       </breakpoints>

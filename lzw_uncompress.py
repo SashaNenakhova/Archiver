@@ -9,9 +9,6 @@ def write_result(seq, result_name):
 
 # finds max index for bytes
 def max_index():
-    # print('\n')
-    # print("len dict-1 bin", bin(len(dictionary)-1).replace("0b", "") )
-    # print("len dict", len(dictionary))
 
     return len(bin(len(dictionary)-1).replace("0b", ""))
 
@@ -20,21 +17,36 @@ def max_index():
 def hex_to_bin(hex_chunk):
     code = ''
 
-    for i in hex_chunk:
-        ###!!! current_code = str(dictionary.index(bin(int(i, 16)).replace("0b", "")))
-        current_code = bin(int(i, 16)).replace("0b", "")
-        # print("i in hex chunk", i)
+    # for i in hex_chunk:
+    #     ###!!! current_code = str(dictionary.index(bin(int(i, 16)).replace("0b", "")))
+    #     current_code = bin(int(i, 16)).replace("0b", "")
+    #     # print("i in hex chunk", i)
+    #
+    #     # добавлять нули в начало, пока длина индекса не равна
+    #     # количеству цифр в самом большом индексе
+    #     while len(current_code) < len(bin(len(dictionary) - 1).replace("0b", "")):
+    #         current_code = '0' + current_code
+    #     code += current_code
+    #
+    #
+    #     ### with current_code = bin(int(i, 16)).replace("0b", "")
 
-        # добавлять нули в начало, пока длина индекса не равна
-        # количеству цифр в самом большом индексе
-        while len(current_code) < len(bin(len(dictionary) - 1).replace("0b", "")):
+    ##################################
+    for i in range(1, len(hex_chunk)-1, 2):
+        current_code= bin(int(hex_chunk[i-1:i+1], 16)).replace("0b", "")
+        print(hex_chunk[i-1:i+1])
+
+        # while len(current_code) < len(bin(len(dictionary) - 1).replace("0b", "")):
+        while len(current_code) < 8:
             current_code = '0' + current_code
-        code += current_code
+            print("PLUS ZERO")
+        print(len(bin(len(dictionary)-1)))
 
+        print("HEX TO BIN CUR CODE", current_code)
+        code+=current_code
 
-        ### with current_code = bin(int(i, 16)).replace("0b", "")
-
-
+    print("HEX TO BIN CHUNK TO BINARY FINAL", code)
+    ##################################
     return code
 
 
@@ -50,7 +62,7 @@ def get_sequence(n):
     # current_seq = str(bin(dictionary[n.replace("0b", "")]))
 
     #
-    print('\n', "index to int", int(n, 2))
+    #print('\n', "index to int", int(n, 2))
     #
     #
 
@@ -103,9 +115,9 @@ def lzw_decode(code):
 
             except:
                 current_code = current_code[:-1]
-            # print('\n', 'current code', current_code)
-        print("current code after cycle", current_code)
-        print('current seq', current_seq)
+           # # print('\n', 'current code', current_code)
+       ## print("current code after cycle", current_code)
+       # print('current seq', current_seq)
         # print("max_num", max_num)
 
 
@@ -127,7 +139,7 @@ def lzw_decode(code):
         # из начала файла удаляются зашифрованные символы
         code = code[len(str(current_code)):]
 
-        print("decoded", seq)
+       # print("decoded", seq)
         # print("WHILE CODE iteration ended")
 
 
